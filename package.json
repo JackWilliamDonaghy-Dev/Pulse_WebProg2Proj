@@ -1,0 +1,29 @@
+{
+  "name": "pulse_webprog2proj",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JackWilliamDonaghy-Dev/Pulse_WebProg2Proj.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/JackWilliamDonaghy-Dev/Pulse_WebProg2Proj/issues"
+  },
+  "homepage": "https://github.com/JackWilliamDonaghy-Dev/Pulse_WebProg2Proj#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.6.4",
+    "typescript": "^7.0.2"
+  }
+}
