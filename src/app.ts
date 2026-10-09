@@ -1,11 +1,14 @@
 import express, {Application, Request, Response} from "express" ;
+import peopleRoutes from "./routes/people";
 
 const PORT = process.env.PORT || 3000;
 
 
-const app: Application = express();
 
+const app: Application = express();
 app.use(express.json());
+app.use('/api/people',peopleRoutes);
+
 
 app.use((req, _res, next) => {  
     console.log(`${req.method} ${req.originalUrl}`);
