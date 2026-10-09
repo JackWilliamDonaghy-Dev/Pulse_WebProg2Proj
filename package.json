@@ -24,7 +24,8 @@
   "homepage": "https://github.com/JackWilliamDonaghy-Dev/Pulse_WebProg2Proj#readme",
   "dependencies": {
     "dotenv": "^18.0.6",
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "mongoose": "^9.11.1"
   },
   "devDependencies": {
     "@types/express": "^5.0.6",

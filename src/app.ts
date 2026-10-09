@@ -1,7 +1,7 @@
 import express, {Application, Request, Response} from "express" ;
 import peopleRoutes from "./routes/people";
-
-const PORT = process.env.PORT || 3000;
+import { env } from "./config/env";
+const port = env.port
 
 
 
@@ -21,4 +21,4 @@ app.get("/api/people", async (_req : Request, res: Response) => {
 });
 
 
-app.listen(PORT, () => {console.log("Server is running on port", PORT)});
+app.listen(port, () => {console.log("Server is running on port", port)});
