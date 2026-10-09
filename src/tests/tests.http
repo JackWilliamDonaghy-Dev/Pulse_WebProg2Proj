@@ -1,0 +1,23 @@
+@endpoint = http://localhost:3000/api/people
+
+###
+POST {{endpoint}} HTTP/1.1
+content-type: application/json
+
+###
+GET  {{endpoint}} HTTP/3.0
+content-type: application/json
+
+###
+GET  {{endpoint}}/PersonID HTTP/3.0
+content-type: application/json
+
+###
+
+DELETE  {{endpoint}}/PersonID HTTP/3.0
+content-type: application/json
+
+###
+
+PUT  {{endpoint}}/PersonID HTTP/3.0
+content-type: application/json

@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/JackWilliamDonaghy-Dev/Pulse_WebProg2Proj#readme",
   "dependencies": {
+    "dotenv": "^18.0.6",
     "express": "^5.2.1"
   },
   "devDependencies": {
