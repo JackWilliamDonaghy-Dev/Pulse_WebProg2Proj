@@ -3,6 +3,8 @@ import { env } from "./config/env";
 import { connectDB } from "./config/database";
 import personRoutes from "./routes/people";
 import interactionRoutes from "./routes/interactions";
+import swaggerUi from "swagger-ui-express";
+import { swaggerSpec } from "./config/swagger";
 const port = env.port
 
 
@@ -10,6 +12,7 @@ const port = env.port
 const app: Application = express();
 app.use(express.json());
 
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/api/v1/people", personRoutes);
 app.use("/api/v1/interactions", interactionRoutes);
 

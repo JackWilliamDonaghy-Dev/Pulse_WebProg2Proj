@@ -30,6 +30,47 @@ export const InteractionModel = model<IInteraction>(
   
 
 
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     CreateInteractionInput:
+ *       type: object
+ *       required:
+ *         - personId
+ *         - date
+ *         - type
+ *       properties:
+ *         personId:
+ *           type: string
+ *           pattern: '^[a-fA-F0-9]{24}$'
+ *           description: MongoDB ObjectId referencing a Person
+ *         date:
+ *           type: string
+ *           format: date-time
+ *           example: "2026-10-11T14:00:00.000Z"
+ *         type:
+ *           type: string
+ *           enum: [call, message, in-person, other]
+ *         notes:
+ *           type: string
+ *           example: "Caught up over coffee"
+ *     UpdateInteractionInput:
+ *       type: object
+ *       properties:
+ *         personId:
+ *           type: string
+ *           pattern: '^[a-fA-F0-9]{24}$'
+ *         date:
+ *           type: string
+ *           format: date-time
+ *         type:
+ *           type: string
+ *           enum: [call, message, in-person, other]
+ *         notes:
+ *           type: string
+ */
+
 export const createInteractionZSchema = z.object({
     personId: z.string().regex(/^[a-f\d]{24}$/i),
     date: z.coerce.date(),

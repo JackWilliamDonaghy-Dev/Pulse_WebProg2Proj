@@ -4,6 +4,94 @@ import { InteractionService } from "../services/interactions";
 
 const interactionService = new InteractionService();
 
+
+/**
+ * @openapi
+ * /interactions:
+ *   get:
+ *     summary: Get all interactions
+ *     tags: [Interactions]
+ *     responses:
+ *       200:
+ *         description: List of interactions
+ *       500:
+ *         description: Server error
+ *   post:
+ *     summary: Create an interaction
+ *     tags: [Interactions]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/CreateInteractionInput'
+ *     responses:
+ *       201:
+ *         description: Interaction created
+ *       400:
+ *         description: Invalid data
+ *       500:
+ *         description: Server error
+ *
+ * /interactions/{id}:
+ *   get:
+ *     summary: Get an interaction by ID
+ *     tags: [Interactions]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Interaction found
+ *       404:
+ *         description: Interaction not found
+ *       500:
+ *         description: Server error
+ *   put:
+ *     summary: Update an interaction
+ *     tags: [Interactions]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/UpdateInteractionInput'
+ *     responses:
+ *       200:
+ *         description: Interaction updated
+ *       400:
+ *         description: Invalid data
+ *       404:
+ *         description: Interaction not found
+ *       500:
+ *         description: Server error
+ *   delete:
+ *     summary: Delete an interaction
+ *     tags: [Interactions]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Interaction deleted
+ *       404:
+ *         description: Interaction not found
+ *       500:
+ *         description: Server error
+ */
+
 export class InteractionController {
 
     getInteractions = async (_req: Request, res: Response): Promise<void> => {

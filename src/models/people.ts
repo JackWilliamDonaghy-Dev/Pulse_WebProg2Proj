@@ -9,6 +9,8 @@ export interface IPerson {
     openers: string[];
 }
 
+
+
 const personSchema = new Schema<IPerson>({
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
@@ -22,6 +24,59 @@ export const PersonModel = model<IPerson>(
 );
 
 
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     CreatePersonInput:
+ *       type: object
+ *       required:
+ *         - firstName
+ *         - lastName
+ *         - frequencyDays
+ *       properties:
+ *         firstName:
+ *           type: string
+ *           minLength: 1
+ *           example: Helen
+ *         lastName:
+ *           type: string
+ *           minLength: 1
+ *           example: Donaghy
+ *         frequencyDays:
+ *           type: integer
+ *           minimum: 1
+ *           example: 7
+ *         lastContacted:
+ *           type: string
+ *           format: date-time
+ *           nullable: true
+ *         openers:
+ *           type: array
+ *           items:
+ *             type: string
+ *           example: ["How have you been?"]
+ *     UpdatePersonInput:
+ *       type: object
+ *       properties:
+ *         firstName:
+ *           type: string
+ *           minLength: 1
+ *         lastName:
+ *           type: string
+ *           minLength: 1
+ *         frequencyDays:
+ *           type: integer
+ *           minimum: 1
+ *         lastContacted:
+ *           type: string
+ *           format: date-time
+ *           nullable: true
+ *         openers:
+ *           type: array
+ *           items:
+ *             type: string
+ */
 export const createPersonZSchema = z.object({
     firstName: z.string().trim().min(1),
     lastName: z.string().trim().min(1),
