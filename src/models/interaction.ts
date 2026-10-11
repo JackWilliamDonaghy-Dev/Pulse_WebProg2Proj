@@ -1,5 +1,6 @@
 
 import { Schema, model, Types } from "mongoose";
+import { z } from "zod";
 
 export interface IInteraction {
     personId: Types.ObjectId;
@@ -24,6 +25,16 @@ const interactionSchema = new Schema<IInteraction>({
 }, { timestamps: true });
 
 export const InteractionModel = model<IInteraction>(
-    "Interaction", interactionSchema
+    "Interaction", interactionSchema, "Interactions"
 );
   
+
+
+export const createInteractionZSchema = z.object({
+    personId: z.string().regex(/^[a-f\d]{24}$/i),
+    date: z.coerce.date(),
+    type: z.enum(["call", "message", "in-person", "other"]),
+    notes: z.string().optional()
+});
+
+export const updateInteractionZSchema = createInteractionZSchema.partial();

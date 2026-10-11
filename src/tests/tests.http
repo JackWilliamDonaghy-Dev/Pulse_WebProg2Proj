@@ -1,9 +1,71 @@
 @endpoint = http://localhost:3000/api/v1/people
 
+### API tests
+### Create Helen
+POST http://localhost:3000/api/v1/people HTTP/1.1
+Content-Type: application/json
 
-### get all people
-GET {{endpoint}} HTTP/3.0
-content-type: application/json
+{
+    "firstName": "Helen",
+    "lastName": "Donaghy",
+    "frequencyDays": 3,
+    "lastContacted": null,
+    "openers": ["How has your week been?"]
+}
+
+### Create Michael
+POST http://localhost:3000/api/v1/people HTTP/1.1
+Content-Type: application/json
+
+{
+    "firstName": "Michael",
+    "lastName": "Donaghy",
+    "frequencyDays": 7,
+    "lastContacted": null,
+    "openers": ["What have you been up to recently?"]
+}
+
+### Get all People
+GET http://localhost:3000/api/v1/people HTTP/1.1
+
+### delete test person by id
+DELETE {{{{endpoint}}}}/(enterID) HTTP/1.1
+
+
+### zod tests 
+### Valid Person
+POST http://localhost:3000/api/v1/people HTTP/1.1
+Content-Type: application/json
+
+{
+    "firstName": "Helen",
+    "lastName": "Donaghy",
+    "frequencyDays": 3,
+    "lastContacted": null
+}
+
+### Invalid Person
+POST http://localhost:3000/api/v1/people HTTP/1.1
+Content-Type: application/json
+
+{
+    "firstName": "",
+    "lastName": "Donaghy",
+    "frequencyDays": -5
+}
+
+### Invalid Interaction
+POST http://localhost:3000/api/v1/interactions HTTP/1.1
+Content-Type: application/json
+
+{
+    "personId": "invalid",
+    "date": "2026-10-11",
+    "type": "telephone"
+}
+
+
+
 
 ### Create Person
 POST http://localhost:3000/api/v1/people
