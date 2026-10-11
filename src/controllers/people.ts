@@ -1,30 +1,74 @@
-import { Request, Response } from 'express';
 
-export class PeopleController {
+import { Request, Response } from "express";
+import { PersonService } from "../services/people";
 
-  getPeople = async (_req: Request, res: Response): Promise<void> => {
+const personService = new PersonService();
 
-    res.status(200).json({ success: true, 
-      data: "this is just dummy for now a response to the get all people request" });
-  };
+export class PersonController {
 
-  getPersonById = async (req: Request, res: Response): Promise<void> => {
-    res.status(200).json({ success: true, 
-      data: `this is just dummy for now a response to the get person by id request with person id ${req.params.id}` });
-  };
+    getPeople = async (_req: Request, res: Response): Promise<void> => {
+        try {
+            const people = await personService.getAllPeople();
+            res.status(200).json(people);
+        } catch (error) {
+            res.status(500).json({ message: "Error fetching people" });
+        }
+    };
 
-  createPerson = async (req: Request, res: Response): Promise<void> => {
-    res.status(200).json({ success: true, 
-      data: `this is just dummy for now a response to the create person request the data received in the request body is: ${JSON.stringify(req.body)}` });
-  };
+    getPersonById = async (req: Request, res: Response): Promise<void> => {
+        try {
+            const id = String(req.params.id);
+            const person = await personService.getPersonById(id);
 
-  updatePerson = async (req: Request, res: Response): Promise<void> => {
-    res.status(200).json({ success: true, 
-      data: `this is just dummy for now a response to the update person by id request with person id ${req.params.id}` }); 
-  };
+            if (!person) {
+                res.status(404).json({ message: "Person not found" });
+                return;
+            }
 
-  deletePerson = async (_req: Request, res: Response): Promise<void> => {
-    res.status(200).json({ success: true, 
-      data: `this is just dummy for now a response to the delete person by id request with person id ${_req.params.id}` }); 
-  };
+            res.status(200).json(person);
+        } catch (error) {
+            res.status(500).json({ message: "Error fetching person" });
+        }
+    };
+
+    createPerson = async (req: Request, res: Response): Promise<void> => {
+        try {
+            const person = await personService.createPerson(req.body);
+            res.status(201).json(person);
+        } catch (error) {
+            res.status(500).json({ message: "Error creating person" });
+        }
+    };
+
+    updatePerson = async (req: Request, res: Response): Promise<void> => {
+        try {
+            const id = String(req.params.id);
+            const person = await personService.updatePerson(id, req.body);
+
+            if (!person) {
+                res.status(404).json({ message: "Person not found" });
+                return;
+            }
+
+            res.status(200).json(person);
+        } catch (error) {
+            res.status(500).json({ message: "Error updating person" });
+        }
+    };
+
+    deletePerson = async (req: Request, res: Response): Promise<void> => {
+        try {
+            const id = String(req.params.id);
+            const person = await personService.deletePerson(id);
+
+            if (!person) {
+                res.status(404).json({ message: "Person not found" });
+                return;
+            }
+
+            res.status(200).json({ message: "Person deleted" });
+        } catch (error) {
+            res.status(500).json({ message: "Error deleting person" });
+        }
+    };
 }

@@ -1,14 +1,17 @@
 import express, {Application, Request, Response} from "express" ;
-import peopleRoutes from "./routes/people";
 import { env } from "./config/env";
 import { connectDB } from "./config/database";
+import personRoutes from "./routes/people";
+import interactionRoutes from "./routes/interactions";
 const port = env.port
 
 
 
 const app: Application = express();
 app.use(express.json());
-app.use('/api/people',peopleRoutes);
+
+app.use("/api/v1/people", personRoutes);
+app.use("/api/v1/interactions", interactionRoutes);
 
 
 app.use((req, _res, next) => {  
