@@ -1,13 +1,15 @@
-import { Router } from 'express';
-import { PeopleController } from '../controllers/people';
+import { Router } from "express";
+import { PersonController } from "../controllers/people";
+import { validate } from "../middleware/validate.middleware";
+import { createPersonZSchema, updatePersonZSchema } from "../models/people";
 
 const router = Router();
-const peopleController = new PeopleController();
+const controller = new PersonController();
 
-router.get('/', peopleController.getPeople);
-router.get('/:id', peopleController.getPersonById);
-router.post('/', peopleController.createPerson);
-router.put('/:id', peopleController.updatePerson);
-router.delete('/:id', peopleController.deletePerson);
+router.get("/", controller.getPeople);
+router.get("/:id", controller.getPersonById);
+router.post("/", validate(createPersonZSchema), controller.createPerson);
+router.put("/:id", validate(updatePersonZSchema), controller.updatePerson);
+router.delete("/:id", controller.deletePerson);
 
 export default router;

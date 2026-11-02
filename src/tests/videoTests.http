@@ -1,0 +1,89 @@
+
+@baseUrl = http://localhost:3000/api/v1
+@missingId = 507f1f77bcf86cd799439011
+
+### TEST 1 — POST valid Person (expect 201 Created)
+# @name createPerson
+POST {{baseUrl}}/people HTTP/1.1
+Content-Type: application/json
+
+{
+  "firstName": "Video",
+  "lastName": "Demonstration",
+  "frequencyDays": 7,
+  "lastContacted": null,
+  "openers": ["How have you been?"]
+}
+
+### TEST 2 — POST invalid Person (expect 400 Bad Request)
+POST {{baseUrl}}/people HTTP/1.1
+Content-Type: application/json
+
+{
+  "firstName": "",
+  "lastName": "Demonstration",
+  "frequencyDays": -5
+}
+
+### TEST 3 — GET all People (expect 200 OK; Video Demonstration included)
+GET {{baseUrl}}/people HTTP/1.1
+
+### TEST 4 — GET existing Person by ID (expect 200 OK)
+# REST Client takes _id from the response of TEST 1.
+GET {{baseUrl}}/people/{{createPerson.response.body.$._id}} HTTP/1.1
+
+### TEST 5 — GET nonexistent Person (expect 404 Not Found)
+# A syntactically valid MongoDB ObjectId is used to avoid CastError / 500.
+GET {{baseUrl}}/people/{{missingId}} HTTP/1.1
+
+### TEST 6 — PUT existing Person (expect 200 OK)
+PUT {{baseUrl}}/people/{{createPerson.response.body.$._id}} HTTP/1.1
+Content-Type: application/json
+
+{
+  "frequencyDays": 14
+}
+
+### TEST 7 — PUT nonexistent Person (expect 404 Not Found)
+PUT {{baseUrl}}/people/{{missingId}} HTTP/1.1
+Content-Type: application/json
+
+{
+  "frequencyDays": 14
+}
+
+### TEST 8 — PUT invalid Person data (expect 400 Bad Request)
+PUT {{baseUrl}}/people/{{createPerson.response.body.$._id}} HTTP/1.1
+Content-Type: application/json
+
+{
+  "frequencyDays": -10
+}
+
+### TEST 9 — POST valid Interaction linked to created Person (expect 201 Created)
+# @name createInteraction
+POST {{baseUrl}}/interactions HTTP/1.1
+Content-Type: application/json
+
+{
+  "personId": "{{createPerson.response.body.$._id}}",
+  "date": "2026-10-11T12:00:00.000Z",
+  "type": "call",
+  "notes": "Recorded as part of the Pulse API video demonstration"
+}
+
+### TEST 10 — GET existing Interaction (expect 200 OK)
+GET {{baseUrl}}/interactions/{{createInteraction.response.body.$._id}} HTTP/1.1
+
+### TEST 11 — DELETE created Interaction (expect 200 OK)
+# Clean up linked Interaction before deleting its Person.
+DELETE {{baseUrl}}/interactions/{{createInteraction.response.body.$._id}} HTTP/1.1
+
+### TEST 9 — DELETE existing Person (expect 200 OK)
+DELETE {{baseUrl}}/people/{{createPerson.response.body.$._id}} HTTP/1.1
+
+### TEST 10 — DELETE nonexistent Person (expect 404 Not Found)
+DELETE {{baseUrl}}/people/{{missingId}} HTTP/1.1
+
+### OPTIONAL — GET deleted Person (expect 404 Not Found)
+GET {{baseUrl}}/people/{{createPerson.response.body.$._id}} HTTP/1.1
